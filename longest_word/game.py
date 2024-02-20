@@ -1,6 +1,6 @@
 import random
 import string
-
+import requests
 class Game:
     def __init__(self) -> list:
         """Attribute a random grid to size 9"""
@@ -12,7 +12,9 @@ class Game:
         if word is None:
             return False
         word_list = list(word)
-        for word in word_list:
-            if not word in self.grid:
+        for w in word_list:
+            if not w in self.grid:
                 return False
-        return True
+        print(word)
+        print("https://wagon-dictionary.herokuapp.com/{}".format(word.lower()))
+        return requests.get("https://wagon-dictionary.herokuapp.com/{}".format(word.lower())).json()["found"]
